@@ -9,8 +9,6 @@ public class admin {
     Scanner sc =  new Scanner(System.in);
     
     public void addAdmin() {
-    Scanner sc = new Scanner(System.in);
-    config con = new config();
 
     String username, email, password, status;
     int type;
@@ -59,8 +57,12 @@ public class admin {
 }
     
   public void updateUser() {
-    Scanner sc = new Scanner(System.in);
-    config con = new config();
+    
+     String userQuery = "SELECT * FROM User";
+     String[] userHeaders = {"User ID", "Name", "Email", "Role", "Portfolio (Artists)", "Budget(Commissioners)", "Status"};
+     String[] userColumns = {"userID", "name", "email", "role", "portfolio", "budget", "status"};
+     
+     con.viewRecords(userQuery, userHeaders, userColumns);
 
     System.out.println("\n=== UPDATE USER STATUS ===");
     System.out.print("Enter Username to update: ");
@@ -101,7 +103,7 @@ public class admin {
         default: return;
     }
 
-    // Confirm action
+    
     System.out.print("Are you sure you want to set '" + username + "' to " + newStatus + "? (Y/N): ");
     String confirm = sc.next();
     if (!confirm.equalsIgnoreCase("Y")) {
@@ -109,7 +111,7 @@ public class admin {
         return;
     }
 
-    // Execute update
+  
     String query = "UPDATE User SET status = ? WHERE name = ?";
     con.updateRecord(query, newStatus, username);
 
@@ -118,6 +120,12 @@ public class admin {
 
   public void deleteUser() {
           System.out.println("\n=== DELETE USER ===");
+          
+     String userQuery = "SELECT * FROM User";
+     String[] userHeaders = {"User ID", "Name", "Email", "Role", "Portfolio (Artists)", "Budget(Commissioners)", "Status"};
+     String[] userColumns = {"userID", "name", "email", "role", "portfolio", "budget", "status"};
+     
+     con.viewRecords(userQuery, userHeaders, userColumns);
 
     System.out.print("Enter the username of the user to delete: ");
     String username = sc.nextLine().trim();
