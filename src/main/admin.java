@@ -66,7 +66,7 @@ public class admin {
 
     System.out.println("\n=== UPDATE USER STATUS ===");
     System.out.print("Enter Username to update: ");
-    String username = sc.nextLine().trim();
+    String username = sc.next().trim();
 
    
     double userCount = con.getSingleValue("SELECT COUNT(*) FROM User WHERE name = ?", username);
@@ -128,7 +128,7 @@ public class admin {
      con.viewRecords(userQuery, userHeaders, userColumns);
 
     System.out.print("Enter the username of the user to delete: ");
-    String username = sc.nextLine().trim();
+    String username = sc.next().trim();
 
    
     double userCount = con.getSingleValue("SELECT COUNT(*) FROM User WHERE name = ?", username);
@@ -139,7 +139,7 @@ public class admin {
 
     
     System.out.print("Are you sure you want to permanently delete the user '" + username + "'? (Y/N): ");
-    String confirm = sc.nextLine().trim();
+    String confirm = sc.next().trim();
 
     if (!confirm.equalsIgnoreCase("Y")) {
         System.out.println("Deletion canceled.");

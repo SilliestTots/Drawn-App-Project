@@ -17,13 +17,13 @@ public class main {
             System.out.println("Let's set up the first Admin account!\n");
 
             System.out.print("Enter Admin name: ");
-            String name = sc.nextLine();
+            String name = sc.next();
 
             System.out.print("Enter email: ");
-            String email = sc.nextLine();
+            String email = sc.next();
 
             System.out.print("Enter password: ");
-            String password = sc.nextLine();
+            String password = sc.next();
             String hashedPass = con.hashPassword(password);
              System.out.print("Enter Account Status (1 - Active / 2 - Unavailable): ");
              type = sc.nextInt();
@@ -61,31 +61,30 @@ public class main {
                            System.out.println("Login Failed! No such user exists.");
                            break;
                        } else {
-                           java.util.Map<String, Object> user = result.get(0);
-                           String stat = user.get("status").toString();
-                           String role = user.get("role").toString();
-                           if(stat.equals("SUSPENDED")){
-                               System.out.println("Your account is SUSPENDED for Innapropriate Behavior.");
-                               
-                               System.out.println("Contact admins for further inquiries.");
-                               break;
-                         } else if (stat.equals("TERMINATED")) {
-                               System.out.println("Your account has been TERMINATED  for Innapropriate Behavior.");
-                               break;
-                         } else {
+                           java.util.Map<String, Object> user = result.get(0); // get the first (and only) row
+                            String stat = user.get("status").toString();
+                            String role = user.get("role").toString();
+                            int userID = Integer.parseInt(user.get("userID").toString()); // <-- get the ID here
+
+                            if (stat.equals("SUSPENDED")) {
+                                System.out.println("Your account is SUSPENDED for Inappropriate Behavior.");
+                                System.out.println("Contact admins for further inquiries.");
+                                break;
+                            } else if (stat.equals("TERMINATED")) {
+                                System.out.println("Your account has been TERMINATED for Inappropriate Behavior.");
+                                break;
+                            } else {
                                 System.out.println("LOGIN SUCCESSFUL");
-                                if(role.equals("Admin")){
+                                if (role.equals("Admin")) {
                                     us.admin();
-                                    break;
-                                } else if (role.equals("Buyer")){
-                                    System.out.println("beep boop");
-                                    break;
-                                } else if (role.equals("Artist")){
-                                    System.out.println("baap beep");
-                                    break;
+                                } else if (role.equals("Buyer")) {
+                                    us.buyer(userID);  // pass the correct ID
+                                } else if (role.equals("Artist")) {
+                                    us.artist(userID); // pass the correct ID
                                 }
-                              break;      
-                        }
+                                break;
+}
+
                                 
                        }
                    }   
